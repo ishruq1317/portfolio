@@ -1,6 +1,6 @@
 'use client';
 
-import { Download } from 'lucide-react';
+import { Download, FileText } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Footer() {
@@ -70,18 +70,30 @@ export default function Footer() {
               Curriculum Vitae
             </h4>
             <p className="text-xs text-zinc-400 leading-relaxed mb-4">
-              Download the complete 2-page academic and software engineering CV.
+              Download or view the complete 2-page academic and software engineering CV.
             </p>
-            <a
-              href="/Hasin_Ishruq_CV.pdf"
-              download="Hasin_Ishruq_CV.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-violet-600/20 text-violet-300 border border-violet-500/30 hover:bg-violet-600 hover:text-white transition-all shadow-sm shadow-violet-600/20"
-            >
-              <Download size={14} />
-              Download CV (PDF)
-            </a>
+            <div className="flex flex-col gap-2">
+              <a
+                href="/Hasin_Ishruq_CV.pdf"
+                download="Hasin_Ishruq_CV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-violet-600/20 text-violet-300 border border-violet-500/30 hover:bg-violet-600 hover:text-white transition-all shadow-sm shadow-violet-600/20"
+              >
+                <Download size={14} />
+                Download CV (PDF)
+              </a>
+
+              <a
+                href="/Hasin_Ishruq_CV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-medium text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors"
+              >
+                <FileText size={14} />
+                View CV Online
+              </a>
+            </div>
           </div>
         </div>
 

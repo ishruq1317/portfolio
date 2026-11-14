@@ -1,18 +1,29 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Download, Mail, Phone, Code2 } from 'lucide-react';
+import { Download, Mail, Phone, Code2, FileText, Check, Copy } from 'lucide-react';
+import Magnetic from './MagneticButton';
 
 export default function Hero() {
+  const [copiedEmail, setCopiedEmail] = useState(false);
+
+  const handleCopyEmail = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigator.clipboard.writeText('nabil12e4@gmail.com');
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2000);
+  };
+
   return (
     <section
       id="home"
       className="relative w-full max-w-7xl mx-auto px-6 pt-32 pb-20 md:pt-40 md:pb-28 flex flex-col items-center justify-center text-center z-10"
     >
-      {/* Background Decorative Rings */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-violet-600/10 rounded-full blur-[140px] pointer-events-none -z-10" />
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none -z-10" />
+      {/* Background Decorative Rings & Ambient Gradients */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-violet-600/10 rounded-full blur-[140px] pointer-events-none -z-10" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] bg-cyan-500/10 rounded-full blur-[110px] pointer-events-none -z-10" />
 
       {/* Availability Status Badge */}
       <motion.div
@@ -27,7 +38,7 @@ export default function Hero() {
         </span>
         <span className="font-medium text-zinc-200">Final-Year CSE @ DIU</span>
         <span className="text-zinc-600">•</span>
-        <span className="text-zinc-400">Open to Full-Stack & AI Roles</span>
+        <span className="text-zinc-400">Open to Full-Stack & Applied AI Roles</span>
       </motion.div>
 
       {/* Profile Image with Ambient Halo */}
@@ -37,7 +48,7 @@ export default function Hero() {
         transition={{ duration: 0.6, ease: 'easeOut' }}
         className="relative mb-8 group"
       >
-        <div className="absolute -inset-1.5 bg-gradient-to-r from-violet-600 via-cyan-500 to-pink-500 rounded-full blur-md opacity-50 group-hover:opacity-80 transition duration-700 animate-pulse"></div>
+        <div className="absolute -inset-1.5 bg-gradient-to-r from-violet-600 via-cyan-500 to-pink-500 rounded-full blur-md opacity-50 group-hover:opacity-85 transition duration-700 animate-pulse"></div>
         <div className="relative w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden border-2 border-white/20 ring-4 ring-zinc-950 shadow-2xl">
           <Image
             src="/profile.jpg"
@@ -69,42 +80,61 @@ export default function Hero() {
         </p>
       </motion.div>
 
-      {/* Primary Action Buttons */}
+      {/* Primary Action Buttons with Magnetic physics */}
       <motion.div
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="flex flex-wrap items-center justify-center gap-4 w-full max-w-xl mb-12"
+        className="flex flex-wrap items-center justify-center gap-3.5 w-full max-w-2xl mb-12"
       >
         {/* CV Download Button */}
-        <a
-          href="/Hasin_Ishruq_CV.pdf"
-          download="Hasin_Ishruq_CV.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group relative inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-full bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-600 text-white font-semibold text-sm shadow-lg shadow-violet-600/30 hover:shadow-violet-600/50 hover:scale-[1.02] active:scale-[0.98] transition-all"
-        >
-          <Download size={17} className="stroke-[2.5] transition-transform group-hover:-translate-y-0.5" />
-          <span>Download CV (PDF)</span>
-        </a>
+        <Magnetic strength={0.25}>
+          <a
+            href="/Hasin_Ishruq_CV.pdf"
+            download="Hasin_Ishruq_CV.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-full bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-600 text-white font-semibold text-sm shadow-lg shadow-violet-600/30 hover:shadow-violet-600/50 hover:scale-[1.02] active:scale-[0.98] transition-all"
+          >
+            <Download size={17} className="stroke-[2.5] transition-transform group-hover:-translate-y-0.5" />
+            <span>Download CV (PDF)</span>
+          </a>
+        </Magnetic>
+
+        {/* View CV Online */}
+        <Magnetic strength={0.25}>
+          <a
+            href="/Hasin_Ishruq_CV.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-zinc-900/90 hover:bg-zinc-800 text-zinc-200 border border-zinc-700 font-medium text-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
+          >
+            <FileText size={16} className="text-violet-400" />
+            <span>View CV</span>
+          </a>
+        </Magnetic>
 
         {/* Explore Work */}
-        <a
-          href="#projects"
-          className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-zinc-900/90 hover:bg-zinc-800 text-zinc-200 border border-zinc-700 font-medium text-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
-        >
-          <Code2 size={16} />
-          Explore Projects
-        </a>
+        <Magnetic strength={0.25}>
+          <a
+            href="#projects"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-zinc-900/90 hover:bg-zinc-800 text-zinc-200 border border-zinc-700 font-medium text-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
+          >
+            <Code2 size={16} />
+            <span>Explore Projects</span>
+          </a>
+        </Magnetic>
 
         {/* Contact Form CTA */}
-        <a
-          href="#contact"
-          className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full glass hover:bg-white/10 text-zinc-300 hover:text-white border border-white/10 font-medium text-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
-        >
-          <Mail size={16} />
-          Contact Me
-        </a>
+        <Magnetic strength={0.25}>
+          <a
+            href="#contact"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full glass hover:bg-white/10 text-zinc-300 hover:text-white border border-white/10 font-medium text-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
+          >
+            <Mail size={16} />
+            <span>Contact Me</span>
+          </a>
+        </Magnetic>
       </motion.div>
 
       {/* Social / Contact Quick Badges */}
@@ -126,13 +156,22 @@ export default function Hero() {
           github.com/ishruq1317
         </a>
 
-        <a
-          href="mailto:nabil12e4@gmail.com"
-          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-zinc-900/80 border border-zinc-800 hover:border-zinc-700 hover:text-white transition-colors"
-        >
-          <Mail size={13} className="text-violet-400" />
-          nabil12e4@gmail.com
-        </a>
+        <div className="relative group">
+          <a
+            href="mailto:nabil12e4@gmail.com"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-zinc-900/80 border border-zinc-800 hover:border-zinc-700 hover:text-white transition-colors"
+          >
+            <Mail size={13} className="text-violet-400" />
+            nabil12e4@gmail.com
+            <button
+              onClick={handleCopyEmail}
+              className="ml-1 text-zinc-500 hover:text-white"
+              title="Copy email"
+            >
+              {copiedEmail ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
+            </button>
+          </a>
+        </div>
 
         <a
           href="tel:01405080369"
@@ -150,22 +189,22 @@ export default function Hero() {
         transition={{ duration: 0.6, delay: 0.4 }}
         className="w-full max-w-5xl grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 text-left"
       >
-        <div className="glass p-5 rounded-2xl border border-zinc-800/80 relative overflow-hidden">
-          <div className="text-2xl sm:text-3xl font-extrabold text-white mb-1">8+</div>
-          <div className="text-xs text-zinc-400">Full-Stack & Systems Projects on GitHub</div>
+        <div className="glass p-5 rounded-2xl border border-zinc-800/80 relative overflow-hidden group hover:border-violet-500/30 transition-colors">
+          <div className="text-2xl sm:text-3xl font-extrabold text-white mb-1">9</div>
+          <div className="text-xs text-zinc-400">Production & Open-Source Projects on GitHub</div>
         </div>
 
-        <div className="glass p-5 rounded-2xl border border-zinc-800/80 relative overflow-hidden">
+        <div className="glass p-5 rounded-2xl border border-zinc-800/80 relative overflow-hidden group hover:border-cyan-500/30 transition-colors">
           <div className="text-2xl sm:text-3xl font-extrabold text-violet-400 mb-1">2</div>
           <div className="text-xs text-zinc-400">Medical AI & Deep Learning Papers</div>
         </div>
 
-        <div className="glass p-5 rounded-2xl border border-zinc-800/80 relative overflow-hidden">
+        <div className="glass p-5 rounded-2xl border border-zinc-800/80 relative overflow-hidden group hover:border-cyan-500/30 transition-colors">
           <div className="text-2xl sm:text-3xl font-extrabold text-cyan-400 mb-1">2026</div>
           <div className="text-xs text-zinc-400">DIU Dean&apos;s List Award Conferred</div>
         </div>
 
-        <div className="glass p-5 rounded-2xl border border-zinc-800/80 relative overflow-hidden">
+        <div className="glass p-5 rounded-2xl border border-zinc-800/80 relative overflow-hidden group hover:border-pink-500/30 transition-colors">
           <div className="text-2xl sm:text-3xl font-extrabold text-pink-400 mb-1">Top 50</div>
           <div className="text-xs text-zinc-400">ACM Contest Finalist (UTA & Take-Off)</div>
         </div>

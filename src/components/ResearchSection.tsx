@@ -1,6 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
 import { CheckCircle2, Clock, Sparkles } from 'lucide-react';
 
 interface ResearchPaper {
@@ -13,6 +14,104 @@ interface ResearchPaper {
   abstract: string;
   keyContributions: string[];
   tags: string[];
+}
+
+function ResearchPaperCard({ paper, index }: { paper: ResearchPaper; index: number }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    mouseX.set(e.clientX - rect.left);
+    mouseY.set(e.clientY - rect.top);
+  }
+
+  const radialBg = useMotionTemplate`radial-gradient(450px circle at ${mouseX}px ${mouseY}px, rgba(6, 182, 212, 0.14), rgba(139, 92, 246, 0.05) 50%, transparent 80%)`;
+
+  return (
+    <motion.div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      initial={{ opacity: 0, y: 25 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.15 }}
+      className="glass-card p-8 md:p-10 rounded-3xl border border-zinc-800/80 relative overflow-hidden group hover:border-cyan-500/40 transition-colors"
+    >
+      {/* Interactive mouse spotlight overlay */}
+      <motion.div
+        className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-0"
+        style={{ background: radialBg }}
+      />
+
+      {/* Top Glow Accent */}
+      <div className="absolute top-0 right-0 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/2 group-hover:bg-cyan-500/20 transition-all"></div>
+
+      <div className="relative z-10">
+        <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6 mb-6">
+          <div className="flex-1">
+            {/* Status Badges */}
+            <div className="flex flex-wrap items-center gap-3 mb-4">
+              {paper.statusType === 'accepted' ? (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                  <CheckCircle2 size={13} />
+                  {paper.status}
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-400 border border-amber-500/30">
+                  <Clock size={13} />
+                  {paper.status}
+                </span>
+              )}
+
+              <span className="text-xs font-mono text-zinc-400">
+                {paper.conference} • {paper.year}
+              </span>
+            </div>
+
+            <h3 className="text-xl md:text-2xl font-bold text-white leading-snug group-hover:text-cyan-300 transition-colors">
+              {paper.title}
+            </h3>
+          </div>
+        </div>
+
+        {/* Abstract */}
+        <p className="text-zinc-300 text-sm md:text-base leading-relaxed mb-6 font-normal">
+          {paper.abstract}
+        </p>
+
+        {/* Key Contributions */}
+        <div className="mb-6 p-5 rounded-2xl bg-zinc-950/70 border border-zinc-800/80">
+          <h4 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+            <Sparkles size={14} className="text-cyan-400" />
+            Key Methodological Contributions
+          </h4>
+          <ul className="space-y-2">
+            {paper.keyContributions.map((contrib, i) => (
+              <li key={i} className="text-xs md:text-sm text-zinc-300 flex items-start gap-2.5">
+                <span className="text-cyan-400 font-bold mt-0.5">•</span>
+                <span>{contrib}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Tags */}
+        <div className="flex flex-wrap items-center gap-2 pt-4 border-t border-zinc-800/80">
+          {paper.tags.map((tag) => (
+            <span
+              key={tag}
+              className="px-3 py-1 text-xs font-medium text-cyan-300/90 bg-cyan-950/40 border border-cyan-800/40 rounded-lg"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
 }
 
 export default function ResearchSection() {
@@ -67,77 +166,7 @@ export default function ResearchSection() {
 
       <div className="grid grid-cols-1 gap-8">
         {papers.map((paper, index) => (
-          <motion.div
-            key={paper.id}
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: index * 0.15 }}
-            className="glass-card p-8 md:p-10 rounded-3xl border border-zinc-800/80 relative overflow-hidden group hover:border-cyan-500/40"
-          >
-            {/* Top Glow Accent */}
-            <div className="absolute top-0 right-0 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/2 group-hover:bg-cyan-500/15 transition-all"></div>
-
-            <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6 mb-6">
-              <div className="flex-1">
-                {/* Status Badges */}
-                <div className="flex flex-wrap items-center gap-3 mb-4">
-                  {paper.statusType === 'accepted' ? (
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-                      <CheckCircle2 size={13} />
-                      {paper.status}
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-400 border border-amber-500/30">
-                      <Clock size={13} />
-                      {paper.status}
-                    </span>
-                  )}
-
-                  <span className="text-xs font-mono text-zinc-500">
-                    {paper.conference} • {paper.year}
-                  </span>
-                </div>
-
-                <h3 className="text-xl md:text-2xl font-bold text-white leading-snug group-hover:text-cyan-300 transition-colors">
-                  {paper.title}
-                </h3>
-              </div>
-            </div>
-
-            {/* Abstract */}
-            <p className="text-zinc-300 text-sm md:text-base leading-relaxed mb-6 font-normal">
-              {paper.abstract}
-            </p>
-
-            {/* Key Contributions */}
-            <div className="mb-6 p-4 rounded-2xl bg-zinc-950/60 border border-zinc-800/80">
-              <h4 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2.5 flex items-center gap-2">
-                <Sparkles size={14} className="text-cyan-400" />
-                Key Methodological Contributions
-              </h4>
-              <ul className="space-y-2">
-                {paper.keyContributions.map((contrib, i) => (
-                  <li key={i} className="text-xs md:text-sm text-zinc-300 flex items-start gap-2.5">
-                    <span className="text-cyan-400 font-bold mt-0.5">•</span>
-                    <span>{contrib}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Tags */}
-            <div className="flex flex-wrap items-center gap-2 pt-4 border-t border-zinc-800/80">
-              {paper.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="px-3 py-1 text-xs font-medium text-cyan-300/90 bg-cyan-950/40 border border-cyan-800/40 rounded-lg"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </motion.div>
+          <ResearchPaperCard key={paper.id} paper={paper} index={index} />
         ))}
       </div>
     </section>

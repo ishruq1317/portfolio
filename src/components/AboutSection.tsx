@@ -1,9 +1,21 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { Brain, Layers, ShieldCheck, Download, ArrowUpRight } from 'lucide-react';
+import React, { useRef } from 'react';
+import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
+import { Brain, Layers, ShieldCheck, Download, ArrowUpRight, FileText } from 'lucide-react';
 
 export default function AboutSection() {
+  const mainCardRef = useRef<HTMLDivElement>(null);
+  const sideCardRef = useRef<HTMLDivElement>(null);
+
+  const mainMouseX = useMotionValue(0);
+  const mainMouseY = useMotionValue(0);
+  const sideMouseX = useMotionValue(0);
+  const sideMouseY = useMotionValue(0);
+
+  const mainRadialBg = useMotionTemplate`radial-gradient(500px circle at ${mainMouseX}px ${mainMouseY}px, rgba(139, 92, 246, 0.12), rgba(6, 182, 212, 0.04) 50%, transparent 80%)`;
+  const sideRadialBg = useMotionTemplate`radial-gradient(400px circle at ${sideMouseX}px ${sideMouseY}px, rgba(6, 182, 212, 0.12), rgba(139, 92, 246, 0.04) 50%, transparent 80%)`;
+
   return (
     <section id="about" className="w-full max-w-6xl mx-auto px-6 py-20 z-10">
       <div className="flex flex-col items-center md:items-start mb-12">
@@ -18,15 +30,27 @@ export default function AboutSection() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Main Philosophy Card */}
         <motion.div
+          ref={mainCardRef}
+          onMouseMove={(e) => {
+            if (!mainCardRef.current) return;
+            const rect = mainCardRef.current.getBoundingClientRect();
+            mainMouseX.set(e.clientX - rect.left);
+            mainMouseY.set(e.clientY - rect.top);
+          }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="md:col-span-2 glass-card p-8 md:p-10 rounded-3xl relative overflow-hidden flex flex-col justify-between"
+          className="md:col-span-2 glass-card p-8 md:p-10 rounded-3xl relative overflow-hidden flex flex-col justify-between group"
         >
+          <motion.div
+            className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-0"
+            style={{ background: mainRadialBg }}
+          />
+
           <div className="absolute top-0 right-0 w-80 h-80 bg-violet-600/10 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/2"></div>
           
-          <div>
+          <div className="relative z-10">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-xs font-medium text-violet-300 mb-6">
               <Brain size={14} />
               Applied AI & Full-Stack Systems
@@ -45,34 +69,58 @@ export default function AboutSection() {
             </p>
           </div>
 
-          <div className="pt-6 mt-6 border-t border-zinc-800/80 flex flex-wrap items-center justify-between gap-4">
+          <div className="relative z-10 pt-6 mt-6 border-t border-zinc-800/80 flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-2 text-xs text-zinc-400">
               <ShieldCheck size={16} className="text-emerald-400" />
               <span>DIU Dean&apos;s List Award (2026) • GPA 5.00/5.00 HSC & SSC</span>
             </div>
 
-            <a
-              href="/Hasin_Ishruq_CV.pdf"
-              download="Hasin_Ishruq_CV.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-violet-400 hover:text-violet-300 transition-colors"
-            >
-              <Download size={14} />
-              Get Complete CV (PDF)
-            </a>
+            <div className="flex items-center gap-3">
+              <a
+                href="/Hasin_Ishruq_CV.pdf"
+                download="Hasin_Ishruq_CV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-violet-400 hover:text-violet-300 transition-colors"
+              >
+                <Download size={14} />
+                Download CV
+              </a>
+              <span className="text-zinc-600">•</span>
+              <a
+                href="/Hasin_Ishruq_CV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-cyan-400 hover:text-cyan-300 transition-colors"
+              >
+                <FileText size={14} />
+                View CV
+              </a>
+            </div>
           </div>
         </motion.div>
 
         {/* Core Competencies Box */}
         <motion.div
+          ref={sideCardRef}
+          onMouseMove={(e) => {
+            if (!sideCardRef.current) return;
+            const rect = sideCardRef.current.getBoundingClientRect();
+            sideMouseX.set(e.clientX - rect.left);
+            sideMouseY.set(e.clientY - rect.top);
+          }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="glass-card p-8 rounded-3xl flex flex-col justify-between border border-zinc-800/80"
+          className="glass-card p-8 rounded-3xl flex flex-col justify-between border border-zinc-800/80 relative overflow-hidden group"
         >
-          <div>
+          <motion.div
+            className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-0"
+            style={{ background: sideRadialBg }}
+          />
+
+          <div className="relative z-10">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-xs font-medium text-cyan-300 mb-6">
               <Layers size={14} />
               Core Pillars
@@ -113,13 +161,13 @@ export default function AboutSection() {
             </div>
           </div>
 
-          <div className="mt-6 pt-4 border-t border-zinc-800/60">
+          <div className="relative z-10 mt-6 pt-4 border-t border-zinc-800/60">
             <a
               href="#contact"
-              className="text-xs text-zinc-400 hover:text-white flex items-center justify-between group"
+              className="text-xs text-zinc-400 hover:text-white flex items-center justify-between group/link"
             >
               <span>Interested in collaborating?</span>
-              <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              <ArrowUpRight size={14} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
             </a>
           </div>
         </motion.div>

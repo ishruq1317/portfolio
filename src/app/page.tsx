@@ -7,13 +7,13 @@ import SkillsSection from "@/components/SkillsSection";
 import EducationAwards from "@/components/EducationAwards";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
-import MouseGlow from "@/components/MouseGlow";
+import InteractiveCursor from "@/components/InteractiveCursor";
 
 export default function Home() {
   return (
     <div className="relative min-h-screen w-full flex flex-col bg-[#09090b] text-zinc-100 overflow-x-hidden selection:bg-violet-500/30 selection:text-white">
-      {/* Interactive Cursor Spotlight */}
-      <MouseGlow />
+      {/* Interactive Cursor Spotlight & Trailing Follower */}
+      <InteractiveCursor />
 
       {/* Fixed Navigation Bar */}
       <Navbar />

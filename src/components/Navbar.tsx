@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Download, Menu, X, ArrowUpRight } from 'lucide-react';
+import { Download, Menu, X, ArrowUpRight, FileText } from 'lucide-react';
+import Magnetic from './MagneticButton';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -34,7 +35,7 @@ export default function Navbar() {
         transition={{ duration: 0.5, ease: 'easeOut' }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-zinc-950/80 backdrop-blur-xl border-b border-zinc-800/80 py-3.5 shadow-2xl shadow-black/40'
+            ? 'bg-zinc-950/85 backdrop-blur-xl border-b border-zinc-800/80 py-3.5 shadow-2xl shadow-black/40'
             : 'bg-transparent py-5'
         }`}
       >
@@ -63,24 +64,28 @@ export default function Navbar() {
 
           {/* Action CTAs */}
           <div className="hidden sm:flex items-center gap-3">
-            <a
-              href="/Hasin_Ishruq_CV.pdf"
-              download="Hasin_Ishruq_CV.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-violet-600/15 text-violet-300 border border-violet-500/30 hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all shadow-sm shadow-violet-500/20 active:scale-95"
-            >
-              <Download size={14} className="stroke-[2.5]" />
-              Download CV
-            </a>
+            <Magnetic strength={0.2}>
+              <a
+                href="/Hasin_Ishruq_CV.pdf"
+                download="Hasin_Ishruq_CV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-violet-600/15 text-violet-300 border border-violet-500/30 hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all shadow-sm shadow-violet-500/20 active:scale-95"
+              >
+                <Download size={14} className="stroke-[2.5]" />
+                Download CV
+              </a>
+            </Magnetic>
 
-            <a
-              href="#contact"
-              className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold bg-zinc-800/80 text-zinc-200 border border-zinc-700 hover:bg-zinc-700 hover:text-white transition-all active:scale-95"
-            >
-              Contact
-              <ArrowUpRight size={13} />
-            </a>
+            <Magnetic strength={0.2}>
+              <a
+                href="#contact"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold bg-zinc-800/80 text-zinc-200 border border-zinc-700 hover:bg-zinc-700 hover:text-white transition-all active:scale-95"
+              >
+                Contact
+                <ArrowUpRight size={13} />
+              </a>
+            </Magnetic>
           </div>
 
           {/* Mobile Menu Button */}
@@ -127,7 +132,17 @@ export default function Navbar() {
                 className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-violet-600 text-white shadow-lg shadow-violet-600/30"
               >
                 <Download size={16} />
-                Download CV
+                Download CV (PDF)
+              </a>
+              <a
+                href="/Hasin_Ishruq_CV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium bg-zinc-900 text-zinc-300 border border-zinc-800"
+              >
+                <FileText size={16} />
+                View CV Online
               </a>
               <a
                 href="#contact"

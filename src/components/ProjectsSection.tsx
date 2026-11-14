@@ -44,24 +44,14 @@ export default function ProjectsSection() {
       featured: true,
     },
     {
-      id: 'nflix',
-      title: 'N-Flix – Interactive Video Streaming Web Application',
-      subtitle: 'Interactive Media Streaming',
+      id: 'khali-khai',
+      title: 'Khali Khai – AI-Powered Multi-Restaurant Food Delivery Platform',
+      subtitle: 'Smart Logistics Platform',
       description:
-        'Feature-rich Netflix-inspired streaming web application built with React and Vite, featuring interactive user profiles, PIN security protection, animated backdrop banners, catalog search, and custom playback.',
-      tech: ['React', 'Vite', 'JavaScript', 'Tailwind CSS', 'REST APIs'],
-      githubLink: 'https://github.com/ishruq1317/N-Flix',
-      category: 'frontend',
-    },
-    {
-      id: 'hydraflow',
-      title: 'HydraFlow – Adaptive Hydration Tracking & UI/UX Platform',
-      subtitle: 'Interactive Wellness Design',
-      description:
-        'Interactive user interface application implementing adaptive hydration tracking models with interactive visual feedback, smooth micro-interactions, and accessible responsive design.',
-      tech: ['TypeScript', 'Modern Web UI', 'Responsive Design', 'Accessibility'],
-      githubLink: 'https://github.com/ishruq1317/HydraFlow-UIUX-Project',
-      category: 'frontend',
+        'AI-Powered multi-restaurant food delivery and smart shared logistics platform for Bangladesh. Supports ordering from different restaurants in one smart cart with a transparent delivery plan.',
+      tech: ['Next.js', 'React', 'TypeScript', 'Logistics Routing', 'Tailwind CSS'],
+      githubLink: 'https://github.com/ishruq1317/khali-khai',
+      category: 'fullstack',
     },
     {
       id: 'landguard',
@@ -74,6 +64,26 @@ export default function ProjectsSection() {
       category: 'fullstack',
     },
     {
+      id: 'coffee-roaster',
+      title: 'ATELIER Kaffeerösterei – European Specialty Coffee Roastery Platform',
+      subtitle: 'Artisanal Roastery Experience',
+      description:
+        'European specialty coffee roastery & micro-lot concept store platform. Built with React, TypeScript & Tailwind CSS, featuring interactive micro-lot catalog, roast level visualizer, and responsive design.',
+      tech: ['React', 'TypeScript', 'Tailwind CSS', 'Component Architecture', 'Responsive UI'],
+      githubLink: 'https://github.com/ishruq1317/Coffee_Roaster',
+      category: 'frontend',
+    },
+    {
+      id: 'nflix',
+      title: 'N-Flix – Interactive Video Streaming Web Application',
+      subtitle: 'Interactive Media Streaming',
+      description:
+        'Feature-rich Netflix-inspired streaming web application built with React and Vite, featuring interactive user profiles, PIN security protection, animated backdrop banners, catalog search, and custom playback.',
+      tech: ['React', 'Vite', 'JavaScript', 'Tailwind CSS', 'REST APIs'],
+      githubLink: 'https://github.com/ishruq1317/N-Flix',
+      category: 'frontend',
+    },
+    {
       id: 'maison-doree',
       title: 'Maison Dorée – Haute Boulangerie & Pâtisserie Artisanale',
       subtitle: 'Artisanal Commerce Experience',
@@ -84,14 +94,14 @@ export default function ProjectsSection() {
       category: 'frontend',
     },
     {
-      id: 'khali-khai',
-      title: 'Khali Khai – AI-Powered Multi-Restaurant Food Delivery Platform',
-      subtitle: 'Smart Logistics Platform',
+      id: 'hydraflow',
+      title: 'HydraFlow – Adaptive Hydration Tracking & UI/UX Platform',
+      subtitle: 'Interactive Wellness Design',
       description:
-        'AI-Powered multi-restaurant food delivery and smart shared logistics platform for Bangladesh. Supports ordering from different restaurants in one smart cart with a transparent delivery plan.',
-      tech: ['Next.js', 'React', 'TypeScript', 'Logistics Routing', 'Tailwind CSS'],
-      githubLink: 'https://github.com/ishruq1317/khali-khai',
-      category: 'fullstack',
+        'Interactive user interface application implementing adaptive hydration tracking models with interactive visual feedback, smooth micro-interactions, and accessible responsive design.',
+      tech: ['TypeScript', 'Modern Web UI', 'Responsive Design', 'Accessibility'],
+      githubLink: 'https://github.com/ishruq1317/HydraFlow-UIUX-Project',
+      category: 'frontend',
     },
   ];
 
@@ -135,7 +145,7 @@ export default function ProjectsSection() {
                 : 'text-zinc-400 hover:text-white'
             }`}
           >
-            Full-Stack & Systems
+            Full-Stack & Systems ({allProjects.filter((p) => p.category === 'fullstack').length})
           </button>
           <button
             onClick={() => setFilter('frontend')}
@@ -145,7 +155,7 @@ export default function ProjectsSection() {
                 : 'text-zinc-400 hover:text-white'
             }`}
           >
-            Modern Web & UI
+            Modern Web & UI ({allProjects.filter((p) => p.category === 'frontend').length})
           </button>
         </div>
       </div>
