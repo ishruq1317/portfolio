@@ -2,7 +2,7 @@
 
 import React, { useRef } from 'react';
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
-import { Brain, Layers, ShieldCheck, Download, ArrowUpRight, FileText } from 'lucide-react';
+import { Brain, Layers, ShieldCheck, ArrowUpRight } from 'lucide-react';
 
 export default function AboutSection() {
   const mainCardRef = useRef<HTMLDivElement>(null);
@@ -69,34 +69,9 @@ export default function AboutSection() {
             </p>
           </div>
 
-          <div className="relative z-10 pt-6 mt-6 border-t border-zinc-800/80 flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-2 text-xs text-zinc-400">
-              <ShieldCheck size={16} className="text-emerald-400" />
-              <span>DIU Dean&apos;s List Award (2026) • GPA 5.00/5.00 HSC & SSC</span>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <a
-                href="/Hasin_Ishruq_CV.pdf"
-                download="Hasin_Ishruq_CV.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-violet-400 hover:text-violet-300 transition-colors"
-              >
-                <Download size={14} />
-                Download CV
-              </a>
-              <span className="text-zinc-600">•</span>
-              <a
-                href="/Hasin_Ishruq_CV.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-cyan-400 hover:text-cyan-300 transition-colors"
-              >
-                <FileText size={14} />
-                View CV
-              </a>
-            </div>
+          <div className="relative z-10 pt-6 mt-6 border-t border-zinc-800/80 flex items-center gap-2 text-xs text-zinc-400">
+            <ShieldCheck size={16} className="text-emerald-400" />
+            <span>DIU Dean&apos;s List Award (2026) • GPA 5.00/5.00 HSC & SSC</span>
           </div>
         </motion.div>
 

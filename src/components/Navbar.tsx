@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Download, Menu, X, ArrowUpRight, FileText } from 'lucide-react';
+import { Download, Menu, X, ArrowUpRight } from 'lucide-react';
 import Magnetic from './MagneticButton';
 
 export default function Navbar() {
@@ -124,32 +124,11 @@ export default function Navbar() {
 
             <div className="pt-3 border-t border-zinc-800 flex flex-col sm:hidden gap-2">
               <a
-                href="/Hasin_Ishruq_CV.pdf"
-                download="Hasin_Ishruq_CV.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#contact"
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-violet-600 text-white shadow-lg shadow-violet-600/30"
               >
-                <Download size={16} />
-                Download CV (PDF)
-              </a>
-              <a
-                href="/Hasin_Ishruq_CV.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium bg-zinc-900 text-zinc-300 border border-zinc-800"
-              >
-                <FileText size={16} />
-                View CV Online
-              </a>
-              <a
-                href="#contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium bg-zinc-900 text-zinc-300 border border-zinc-800"
-              >
-                Contact
+                Contact Me
               </a>
             </div>
           </motion.div>

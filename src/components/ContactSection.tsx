@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, CheckCircle2, Download, Copy, Check, FileText, ExternalLink } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle2, Copy, Check, ExternalLink } from 'lucide-react';
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -75,9 +75,6 @@ export default function ContactSection() {
   return (
     <section id="contact" className="w-full max-w-6xl mx-auto px-6 py-24 z-10">
       <div className="flex flex-col items-center text-center mb-16">
-        <span className="text-xs font-mono text-violet-400 uppercase tracking-[0.25em] mb-2">
-          06. Direct Communication
-        </span>
         <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight mb-4">
           Get in Touch
         </h2>
@@ -115,7 +112,7 @@ export default function ContactSection() {
                 Contact Information
               </h3>
               <p className="text-xs text-zinc-400 mb-6 leading-relaxed">
-                Reach out directly via email, phone, or download my comprehensive curriculum vitae.
+                Reach out directly via email, phone, or send a direct message below.
               </p>
 
               <div className="space-y-3.5">
@@ -209,30 +206,6 @@ export default function ContactSection() {
                     </div>
                   </div>
                 </div>
-              </div>
-
-              {/* Direct CV Download & View buttons in Contact */}
-              <div className="mt-6 pt-5 border-t border-zinc-800 grid grid-cols-2 gap-3">
-                <a
-                  href="/Hasin_Ishruq_CV.pdf"
-                  download="Hasin_Ishruq_CV.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 px-3.5 py-3 rounded-xl bg-violet-600/20 hover:bg-violet-600 text-violet-200 hover:text-white border border-violet-500/30 text-xs font-semibold transition-all shadow-sm shadow-violet-600/20"
-                >
-                  <Download size={14} />
-                  Download CV
-                </a>
-
-                <a
-                  href="/Hasin_Ishruq_CV.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 px-3.5 py-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-700 text-xs font-semibold transition-all"
-                >
-                  <FileText size={14} />
-                  View Online
-                </a>
               </div>
             </div>
           </div>
