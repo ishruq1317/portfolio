@@ -46,12 +46,13 @@ export default function ProjectsSection() {
     {
       id: 'khali-khai',
       title: 'Khali Khai – AI-Powered Multi-Restaurant Food Delivery Platform',
-      subtitle: 'Smart Logistics Platform',
+      subtitle: 'Smart Logistics & Route Optimization',
       description:
-        'AI-Powered multi-restaurant food delivery and smart shared logistics platform for Bangladesh. Supports ordering from different restaurants in one smart cart with a transparent delivery plan.',
-      tech: ['Next.js', 'React', 'TypeScript', 'Logistics Routing', 'Tailwind CSS'],
+        'Engineered smart multi-restaurant ordering platform with shared logistics clustering and dynamic route optimization. Built atomic database price verification, synchronized kitchen ready-times, and automated loyalty reward engine.',
+      tech: ['Next.js 16', 'TypeScript', 'Tailwind CSS v4', 'Prisma', 'PostgreSQL'],
       githubLink: 'https://github.com/ishruq1317/khali-khai',
       category: 'fullstack',
+      featured: true,
     },
     {
       id: 'landguard',
