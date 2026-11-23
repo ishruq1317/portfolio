@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import InteractiveCursor from "@/components/InteractiveCursor";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,9 +49,21 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased selection:bg-violet-500/30 selection:text-white bg-[#09090b] text-zinc-100 min-h-screen flex flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased selection:bg-violet-500/30 selection:text-white bg-[#09090b] text-zinc-100 min-h-screen flex flex-col overflow-x-hidden`}
       >
-        {children}
+        {/* Interactive Cursor Spotlight & Trailing Follower */}
+        <InteractiveCursor />
+
+        {/* Common Navigation Bar across all pages */}
+        <Navbar />
+
+        {/* Page Content */}
+        <main className="flex-1 flex flex-col items-center w-full z-10">
+          {children}
+        </main>
+
+        {/* Common Footer across all pages */}
+        <Footer />
       </body>
     </html>
   );

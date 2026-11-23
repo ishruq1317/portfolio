@@ -9,6 +9,8 @@ export default function ContactSection() {
     name: '',
     email: '',
     subject: '',
+    contactMethod: 'Email',
+    requestCv: false,
     message: '',
   });
 
@@ -33,7 +35,7 @@ export default function ContactSection() {
   };
 
   const handleCopyFormattedMessage = () => {
-    const formatted = `To: nabil12e4@gmail.com\nSubject: ${formData.subject || `Inquiry from ${formData.name}`}\n\nFrom: ${formData.name} (${formData.email})\n\nMessage:\n${formData.message}`;
+    const formatted = `To: nabil12e4@gmail.com\nSubject: ${formData.subject || `Inquiry from ${formData.name}`}\n\nFrom: ${formData.name} (${formData.email})\nPreferred Contact Method: ${formData.contactMethod}\nRequested CV/References: ${formData.requestCv ? 'Yes' : 'No'}\n\nMessage:\n${formData.message}`;
     navigator.clipboard.writeText(formatted);
     setCopiedFormatted(true);
     setTimeout(() => setCopiedFormatted(false), 2500);
@@ -45,6 +47,12 @@ export default function ContactSection() {
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
       setFormStatus('error');
       setErrorMessage('Please fill in your name, email, and message.');
+      return;
+    }
+
+    if (!formData.subject) {
+      setFormStatus('error');
+      setErrorMessage('Please select an inquiry category / subject.');
       return;
     }
 
@@ -62,9 +70,9 @@ export default function ContactSection() {
     }, 600);
   };
 
-  const subjectEncoded = encodeURIComponent(formData.subject || `Portfolio Inquiry from ${formData.name}`);
+  const subjectEncoded = encodeURIComponent(formData.subject ? `[${formData.subject}] from ${formData.name}` : `Portfolio Inquiry from ${formData.name}`);
   const bodyEncoded = encodeURIComponent(
-    `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    `Name: ${formData.name}\nEmail: ${formData.email}\nInquiry Category: ${formData.subject}\nPreferred Contact Method: ${formData.contactMethod}\nRequested CV/References: ${formData.requestCv ? 'Yes' : 'No'}\n\nMessage:\n${formData.message}`
   );
   const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=nabil12e4@gmail.com&su=${subjectEncoded}&body=${bodyEncoded}`;
   const mailtoUrl = `mailto:nabil12e4@gmail.com?subject=${subjectEncoded}&body=${bodyEncoded}`;
@@ -295,7 +303,7 @@ export default function ContactSection() {
 
                     <button
                       onClick={() => {
-                        setFormData({ name: '', email: '', subject: '', message: '' });
+                        setFormData({ name: '', email: '', subject: '', contactMethod: 'Email', requestCv: false, message: '' });
                         setFormStatus('idle');
                       }}
                       className="px-4 py-2 rounded-xl bg-transparent hover:bg-zinc-800/60 text-xs font-medium text-zinc-400 hover:text-white transition-colors"
@@ -314,11 +322,13 @@ export default function ContactSection() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+                      <label htmlFor="name" className="block text-xs font-medium text-zinc-300 mb-1.5">
                         Your Name <span className="text-violet-400">*</span>
                       </label>
                       <input
                         type="text"
+                        id="name"
+                        name="name"
                         required
                         placeholder="e.g. Alex Morgan"
                         value={formData.name}
@@ -328,11 +338,13 @@ export default function ContactSection() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+                      <label htmlFor="email" className="block text-xs font-medium text-zinc-300 mb-1.5">
                         Your Email <span className="text-violet-400">*</span>
                       </label>
                       <input
                         type="email"
+                        id="email"
+                        name="email"
                         required
                         placeholder="alex@organization.com"
                         value={formData.email}
@@ -342,24 +354,107 @@ export default function ContactSection() {
                     </div>
                   </div>
 
+                  {/* Dropdown Select */}
                   <div>
-                    <label className="block text-xs font-medium text-zinc-300 mb-1.5">
-                      Subject
+                    <label htmlFor="subject" className="block text-xs font-medium text-zinc-300 mb-1.5">
+                      Inquiry Category / Subject <span className="text-violet-400">*</span>
                     </label>
-                    <input
-                      type="text"
-                      placeholder="Project Inquiry / Job Opportunity / Research Discussion"
+                    <select
+                      id="subject"
+                      name="subject"
+                      required
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-xl bg-zinc-900/90 border border-zinc-800 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all"
-                    />
+                      className="w-full px-4 py-2.5 rounded-xl bg-zinc-900/90 border border-zinc-800 text-sm text-white focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all"
+                    >
+                      <option value="" disabled className="bg-zinc-900 text-zinc-400">
+                        Select an inquiry type...
+                      </option>
+                      <option value="Software Engineering / Job Opportunity" className="bg-zinc-900 text-white">
+                        Software Engineering / Job Opportunity
+                      </option>
+                      <option value="Medical AI Research Collaboration" className="bg-zinc-900 text-white">
+                        Medical AI Research Collaboration
+                      </option>
+                      <option value="Freelance / Full-Stack Project Inquiry" className="bg-zinc-900 text-white">
+                        Freelance / Full-Stack Project Inquiry
+                      </option>
+                      <option value="General Academic / Technical Discussion" className="bg-zinc-900 text-white">
+                        General Academic / Technical Discussion
+                      </option>
+                    </select>
                   </div>
 
+                  {/* Preferred Contact Method Radio Group */}
                   <div>
-                    <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+                    <span className="block text-xs font-medium text-zinc-300 mb-1.5">
+                      Preferred Contact Method <span className="text-violet-400">*</span>
+                    </span>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-0.5">
+                      <label htmlFor="method-email" className="flex items-center gap-2 p-2.5 rounded-xl bg-zinc-900/80 border border-zinc-800 text-xs text-zinc-300 hover:border-zinc-700 cursor-pointer transition-colors">
+                        <input
+                          type="radio"
+                          id="method-email"
+                          name="contactMethod"
+                          value="Email"
+                          checked={formData.contactMethod === 'Email'}
+                          onChange={(e) => setFormData({ ...formData, contactMethod: e.target.value })}
+                          className="accent-violet-500 cursor-pointer"
+                        />
+                        <span>Email</span>
+                      </label>
+
+                      <label htmlFor="method-phone" className="flex items-center gap-2 p-2.5 rounded-xl bg-zinc-900/80 border border-zinc-800 text-xs text-zinc-300 hover:border-zinc-700 cursor-pointer transition-colors">
+                        <input
+                          type="radio"
+                          id="method-phone"
+                          name="contactMethod"
+                          value="Phone / Call"
+                          checked={formData.contactMethod === 'Phone / Call'}
+                          onChange={(e) => setFormData({ ...formData, contactMethod: e.target.value })}
+                          className="accent-violet-500 cursor-pointer"
+                        />
+                        <span>Phone / Call</span>
+                      </label>
+
+                      <label htmlFor="method-meeting" className="flex items-center gap-2 p-2.5 rounded-xl bg-zinc-900/80 border border-zinc-800 text-xs text-zinc-300 hover:border-zinc-700 cursor-pointer transition-colors">
+                        <input
+                          type="radio"
+                          id="method-meeting"
+                          name="contactMethod"
+                          value="Online Video Meeting"
+                          checked={formData.contactMethod === 'Online Video Meeting'}
+                          onChange={(e) => setFormData({ ...formData, contactMethod: e.target.value })}
+                          className="accent-violet-500 cursor-pointer"
+                        />
+                        <span>Online Video Meeting</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* Request CV Checkbox */}
+                  <div className="flex items-start gap-2.5 p-3 rounded-xl bg-zinc-900/60 border border-zinc-800">
+                    <input
+                      type="checkbox"
+                      id="requestCv"
+                      name="requestCv"
+                      checked={formData.requestCv}
+                      onChange={(e) => setFormData({ ...formData, requestCv: e.target.checked })}
+                      className="w-4 h-4 mt-0.5 rounded accent-violet-500 cursor-pointer"
+                    />
+                    <label htmlFor="requestCv" className="text-xs text-zinc-300 cursor-pointer select-none">
+                      Also request a copy of Hasin Ishruq&apos;s latest CV &amp; research references
+                    </label>
+                  </div>
+
+                  {/* Message Textarea */}
+                  <div>
+                    <label htmlFor="message" className="block text-xs font-medium text-zinc-300 mb-1.5">
                       Message <span className="text-violet-400">*</span>
                     </label>
                     <textarea
+                      id="message"
+                      name="message"
                       required
                       rows={4}
                       placeholder="Briefly describe your project, timeline, or engineering opportunity..."

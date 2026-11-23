@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Download, Menu, X, ArrowUpRight } from 'lucide-react';
 import Magnetic from './MagneticButton';
@@ -9,6 +10,7 @@ import Magnetic from './MagneticButton';
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,12 +21,10 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { label: 'About', href: '#about' },
-    { label: 'Research', href: '#research' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Skills', href: '#skills' },
-    { label: 'Education', href: '#education' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Home', href: '/' },
+    { label: 'About & Education', href: '/about' },
+    { label: 'Projects & Research', href: '/projects' },
+    { label: 'Contact', href: '/contact' },
   ];
 
   return (
@@ -41,7 +41,7 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           {/* Logo */}
-          <Link href="#home" className="flex items-center gap-2.5 group">
+          <Link href="/" className="flex items-center gap-2.5 group">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
             <span className="font-bold text-lg tracking-tight text-white group-hover:text-violet-400 transition-colors">
               Hasin Ishruq<span className="text-violet-500">.</span>
@@ -50,16 +50,25 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-7">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="text-xs uppercase font-medium tracking-wider text-zinc-400 hover:text-white transition-colors relative py-1 group"
-              >
-                {link.label}
-                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-violet-500 to-cyan-500 group-hover:w-full transition-all duration-300"></span>
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className={`text-xs uppercase tracking-wider transition-colors relative py-1 group ${
+                    isActive ? 'text-white font-semibold' : 'text-zinc-400 hover:text-white font-medium'
+                  }`}
+                >
+                  {link.label}
+                  <span
+                    className={`absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-violet-500 to-cyan-500 transition-all duration-300 ${
+                      isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                    }`}
+                  ></span>
+                </Link>
+              );
+            })}
           </div>
 
           {/* Action CTAs */}
@@ -78,20 +87,20 @@ export default function Navbar() {
             </Magnetic>
 
             <Magnetic strength={0.2}>
-              <a
-                href="#contact"
+              <Link
+                href="/contact"
                 className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold bg-zinc-800/80 text-zinc-200 border border-zinc-700 hover:bg-zinc-700 hover:text-white transition-all active:scale-95"
               >
                 Contact
                 <ArrowUpRight size={13} />
-              </a>
+              </Link>
             </Magnetic>
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-xl text-zinc-400 hover:text-white bg-zinc-900/80 border border-zinc-800"
+            className="lg:hidden p-2 rounded-xl text-zinc-400 hover:text-white bg-zinc-900/80 border border-zinc-800 cursor-pointer"
             aria-label="Toggle Navigation Menu"
           >
             {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -110,26 +119,42 @@ export default function Navbar() {
             className="fixed inset-x-0 top-[65px] z-40 bg-zinc-950/95 backdrop-blur-2xl border-b border-zinc-800/80 p-6 shadow-2xl lg:hidden flex flex-col gap-4"
           >
             <div className="flex flex-col gap-2">
-              {navLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="px-4 py-2.5 rounded-lg text-sm font-medium text-zinc-300 hover:text-white hover:bg-zinc-900 transition-colors"
-                >
-                  {link.label}
-                </a>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                      isActive ? 'bg-violet-600/20 text-white font-semibold' : 'text-zinc-300 hover:text-white hover:bg-zinc-900'
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
             </div>
 
             <div className="pt-3 border-t border-zinc-800 flex flex-col sm:hidden gap-2">
               <a
-                href="#contact"
+                href="/Hasin_Ishruq_CV.pdf"
+                download="Hasin_Ishruq_CV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-zinc-900 text-zinc-200 border border-zinc-700"
+              >
+                <Download size={15} />
+                Download CV
+              </a>
+              <Link
+                href="/contact"
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-violet-600 text-white shadow-lg shadow-violet-600/30"
               >
                 Contact Me
-              </a>
+              </Link>
             </div>
           </motion.div>
         )}

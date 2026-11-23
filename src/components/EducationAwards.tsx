@@ -176,6 +176,61 @@ export default function EducationAwards() {
             </motion.div>
           </div>
         </div>
+
+        {/* Academic & Technical Summary Table (Semantic HTML Table) */}
+        <div className="mt-12 glass-card p-6 md:p-8 rounded-3xl border border-zinc-800/80 overflow-hidden">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+            <h3 className="text-lg md:text-xl font-bold text-white flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
+              Academic &amp; Technical Summary Table
+            </h3>
+            <span className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider">
+              Formal Education &bull; Contests &bull; Research
+            </span>
+          </div>
+          <p className="text-xs text-zinc-400 mb-6">
+            Tabular breakdown of academic degrees, accredited institutions, timelines, and primary concentrations.
+          </p>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs md:text-sm border-collapse border border-zinc-800">
+              <thead>
+                <tr className="bg-zinc-900/90 text-zinc-300 border-b border-zinc-800">
+                  <th scope="col" className="p-3.5 font-semibold border-r border-zinc-800 text-white">Qualification / Domain</th>
+                  <th scope="col" className="p-3.5 font-semibold border-r border-zinc-800 text-white">Institution / Stack</th>
+                  <th scope="col" className="p-3.5 font-semibold border-r border-zinc-800 text-white">Period / Status</th>
+                  <th scope="col" className="p-3.5 font-semibold text-white">Core Focus &amp; Achievement</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-zinc-800/70 text-zinc-300">
+                <tr className="hover:bg-zinc-900/40 transition-colors">
+                  <td className="p-3.5 font-medium text-white border-r border-zinc-800">B.Sc. in Computer Science &amp; Engineering</td>
+                  <td className="p-3.5 border-r border-zinc-800">Daffodil International University (DIU)</td>
+                  <td className="p-3.5 border-r border-zinc-800 text-cyan-400 font-mono">2023 &ndash; Present</td>
+                  <td className="p-3.5">CGPA 3.88 / 4.00, Medical AI &amp; Full-Stack Systems</td>
+                </tr>
+                <tr className="hover:bg-zinc-900/40 transition-colors">
+                  <td className="p-3.5 font-medium text-white border-r border-zinc-800">Higher Secondary Certificate (HSC)</td>
+                  <td className="p-3.5 border-r border-zinc-800">Science Group (Savar Model College)</td>
+                  <td className="p-3.5 border-r border-zinc-800 text-emerald-400 font-mono">Completed (2021)</td>
+                  <td className="p-3.5">Distinction in Mathematics &amp; Physics (GPA 5.00 / 5.00)</td>
+                </tr>
+                <tr className="hover:bg-zinc-900/40 transition-colors">
+                  <td className="p-3.5 font-medium text-white border-r border-zinc-800">Secondary School Certificate (SSC)</td>
+                  <td className="p-3.5 border-r border-zinc-800">Science Group (Radio Colony Model School)</td>
+                  <td className="p-3.5 border-r border-zinc-800 text-emerald-400 font-mono">Completed (2019)</td>
+                  <td className="p-3.5">Foundation in Analytical Sciences (GPA 5.00 / 5.00)</td>
+                </tr>
+                <tr className="hover:bg-zinc-900/40 transition-colors">
+                  <td className="p-3.5 font-medium text-white border-r border-zinc-800">Competitive Programming &amp; Hackathons</td>
+                  <td className="p-3.5 border-r border-zinc-800">ICPC / Intra-University Contests</td>
+                  <td className="p-3.5 border-r border-zinc-800 text-violet-400 font-mono">Active</td>
+                  <td className="p-3.5">Algorithmic Problem Solving &amp; System Design</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </section>
   );

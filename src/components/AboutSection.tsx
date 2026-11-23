@@ -67,6 +67,25 @@ export default function AboutSection() {
             <p className="text-zinc-400 leading-relaxed text-sm">
               Concurrently, I conduct applied deep learning research focusing on medical image diagnostics—specifically formulating multi-scale knowledge distillation frameworks and Grad-CAM visual interpretability to deliver lightweight, reliable clinical diagnostic tools.
             </p>
+
+            {/* Engineering Workflow & Delivery Process (Semantic Ordered List) */}
+            <div className="mt-6 pt-5 border-t border-zinc-800/80">
+              <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-violet-400"></span>
+                Engineering Workflow &amp; Delivery Process
+              </h4>
+              <ol className="list-decimal list-inside space-y-2 text-xs md:text-sm text-zinc-300">
+                <li className="leading-relaxed">
+                  <strong className="text-white">Requirement &amp; Architecture Design</strong> &mdash; Translating complex domain problems into scalable system specifications.
+                </li>
+                <li className="leading-relaxed">
+                  <strong className="text-white">Full-Stack &amp; AI Implementation</strong> &mdash; Building type-safe web interfaces, modular APIs, and reproducible deep-learning pipelines.
+                </li>
+                <li className="leading-relaxed">
+                  <strong className="text-white">Testing, Verification &amp; Deployment</strong> &mdash; Validating cross-browser compatibility, statistical rigor, and cloud CI/CD delivery.
+                </li>
+              </ol>
+            </div>
           </div>
 
           <div className="relative z-10 pt-6 mt-6 border-t border-zinc-800/80 flex items-center gap-2 text-xs text-zinc-400">
